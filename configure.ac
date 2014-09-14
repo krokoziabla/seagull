@@ -1,6 +1,9 @@
 AC_INIT([seagull], [0.0])
 AM_INIT_AUTOMAKE
+
+AM_PROG_AS
 AC_PROG_CC
+AM_PROG_CC_C_O
 
 AC_CONFIG_FILES([Makefile])
 
