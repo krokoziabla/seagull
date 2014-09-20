@@ -1,4 +1,4 @@
-ENTRY(reset)
+ENTRY(__reset_vector)
 
 MEMORY
 {
@@ -8,7 +8,11 @@ MEMORY
 
 SECTIONS
 {
+    vectors : { seagull-vectors.o(vectors) } > ram
+
     .text : { *(.text) } > ram
     .data : { *(.data) } > ram
     .bss : { *(.bss) } > ram
 }
+
+/* __startup_stack = 0x2000 + 0x1000;         /* 4 kB stack */
