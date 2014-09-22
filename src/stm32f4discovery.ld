@@ -2,17 +2,22 @@ ENTRY(__reset_vector)
 
 MEMORY
 {
-    ram : ORIGIN = 0x20000000, LENGTH = 0x30000
-    rom : ORIGIN = 0x08000000, LENGTH = 0x100000
+    sram : ORIGIN = 0x20000000, LENGTH = 0x30000
+    flash : ORIGIN = 0x08000000, LENGTH = 0x100000
 }
 
 SECTIONS
 {
-    vectors : { seagull-vectors.o(vectors) } > ram
+    vectors : { seagull-vectors.o(vectors) } > sram
 
-    .text : { *(.text) } > ram
-    .data : { *(.data) } > ram
-    .bss : { *(.bss) } > ram
+    .text : { *(.text) } > sram
+
+    .data :
+    {
+        . = . + 0x1000;             /* reserve 4 KiB for system stack */
+        __system_stack = . ;
+        *(.data)
+    } > sram
+
+    .bss : { *(.bss) } > sram
 }
-
-/* __startup_stack = 0x2000 + 0x1000;         /* 4 kB stack */
