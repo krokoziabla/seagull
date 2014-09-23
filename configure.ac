@@ -1,10 +1,12 @@
 AC_INIT([seagull], [0.0])
-AM_INIT_AUTOMAKE([subdir-objects])
+AM_INIT_AUTOMAKE()
+
+${CFLAGS=""}
 
 AM_PROG_AS
 AC_PROG_CC
-AM_PROG_CC_C_O
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_HEADERS([config.h])
 
 AC_OUTPUT

@@ -1,3 +1,5 @@
+.syntax unified
+
 .global __reset_vector
 
 .thumb_func

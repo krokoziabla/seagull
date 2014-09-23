@@ -1,7 +1,6 @@
 /Debug
 /COPYING
 /INSTALL
-/Makefile.in
 /aclocal.m4
 /autom4te.cache/
 /configure
@@ -11,4 +10,5 @@
 /compile
 
 *.swp
-
+*.in
+*.in~

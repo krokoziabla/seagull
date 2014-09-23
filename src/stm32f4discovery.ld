@@ -9,7 +9,7 @@ MEMORY
 
 SECTIONS
 {
-    vectors : { src/seagull-vectors.o(vectors) } > code AT > sram
+    vectors : { vectors.o(vectors) } > code AT > sram
 
     .text : { *(.text) } > code AT > sram
 
