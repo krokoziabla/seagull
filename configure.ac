@@ -1,5 +1,5 @@
 AC_INIT([seagull], [0.0])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects])
 
 AM_PROG_AS
 AC_PROG_CC
