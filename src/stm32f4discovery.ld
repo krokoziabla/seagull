@@ -25,6 +25,8 @@ SECTIONS
     {
         . = . + 0x1000;             /* reserve 4 KiB for system stack */
         __system_stack = . ;
+        __bss_beginning = . ;
         *(.bss)
+        __bss_end = . ;
     } > sram
 }
