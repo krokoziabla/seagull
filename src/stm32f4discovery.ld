@@ -13,12 +13,12 @@ SECTIONS
 
     .text : { *(.text) } > code AT > sram
 
-    .data :
+    .data : { *(.data) } > sram
+
+    .bss :
     {
         . = . + 0x1000;             /* reserve 4 KiB for system stack */
         __system_stack = . ;
-        *(.data)
+        *(.bss)
     } > sram
-
-    .bss : { *(.bss) } > sram
 }
