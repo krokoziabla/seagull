@@ -5,6 +5,7 @@ AM_CCASFLAGS = -mtune=cortex-m4 -ggdb -O0
 AM_LDFLAGS = -T $(srcdir)/stm32f4discovery.ld -nostartfiles -nostdlib -nodefaultlibs -no-pie
 
 seagull_SOURCES = 	exceptions.s \
+					init.s \
 					scheduler.s \
 					startup.s \
 					$(NULL)
