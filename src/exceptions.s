@@ -4,8 +4,6 @@
 .global __svcall_vector
 .global __systick_vector
 
-.global scheduler_thread_preempted
-
 .thumb_func
 __hard_fault_vector:
     bx      lr
@@ -23,7 +21,7 @@ __systick_vector:
     stmfd   r0!, {r4-r11}
     msr     psp, r0
 
-    bl      scheduler_thread_preempted
+    bl      schedule
 
     # restore context
     mrs     r0, psp
