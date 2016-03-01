@@ -7,6 +7,7 @@ __reset_vector:
 
     # lauch scheduler
     ldr     r0, =init
-    bl      schedule
+    mov     r1, #25
+    svc     #0
 
     b       .

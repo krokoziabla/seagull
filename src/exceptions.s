@@ -10,6 +10,45 @@ __hard_fault_vector:
 
 .thumb_func
 __svcall_vector:
+
+    # which stack to inspect - SP_main or SP_process?
+    mrs     r0, msp
+    push    {r4-r11, lr}
+    mov     r5, r0
+    bfc     lr, #8, #24
+    cmp     lr, #0xfd
+    it      eq
+    mrseq   r5, psp
+
+    # fetch SVC's argument
+    ldr     r4, [r5, #+0x18]
+    ldrb    r4, [r4, #-0x02]
+
+    # call the appropriate handler
+
+    #   0: schedule
+    cmp     r4, #000
+    ittt    eq
+    ldreq   r0, [r5, #+0x00]
+    ldreq   r1, [r5, #+0x04]
+    bleq    schedule
+    cmp     r4, #000
+    itt     eq
+    streq   r0, [r5, #+0x00]
+    beq     __svcall_handled
+
+    #   1: exit
+    cmp     r4, #001
+    ittt    eq
+    ldreq   r0, [r5]
+    popeq   {r4-r11, lr}
+    beq     exit
+
+    #   2: vacant
+
+.thumb_func
+__svcall_handled:
+    pop     {r4-r11, lr}
     bx      lr
 
 # We assume that SysTick has the lowest interrupt priority.

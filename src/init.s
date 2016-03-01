@@ -7,10 +7,10 @@
 # desc:
 #   root thread
 # in:
-#   none
+#   r0 - the pointer to the arguments
 # out:
-#   r0 - result code
+#   r0 - return code
 .thumb_func
 init:
-    mov     r0, #0
+    mov     r0, #5
     bx      lr
