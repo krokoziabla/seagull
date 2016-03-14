@@ -25,29 +25,45 @@ __svcall_vector:
     ldrb    r4, [r4, #-0x02]
 
     # call the appropriate handler
+    ldr     r0, =svcalls
+    ldr     r0, [r0, r4, lsl #2]
+    bx      r0
 
-    #   0: schedule
-    cmp     r4, #000
-    ittt    eq
-    ldreq   r0, [r5, #+0x00]
-    ldreq   r1, [r5, #+0x04]
-    bleq    shceduler_start
-    cmp     r4, #000
-    itt     eq
-    streq   r0, [r5, #+0x00]
-    beq     __svcall_handled
-
-    #   1: exit
-    cmp     r4, #001
-    ittt    eq
-    ldreq   r0, [r5]
-    popeq   {r4-r11, lr}
-    beq     exit
-
-    #   2: vacant
+svcalls:
+    .word   svcall_schedule
+    .word   svcall_exit
+    .word   svcall_fork
+    .word   svcall_wait
 
 .thumb_func
-__svcall_handled:
+svcall_schedule:
+    ldr     r0, [r5, #+0x00]
+    ldr     r1, [r5, #+0x04]
+    bl      shceduler_start
+    str     r0, [r5, #+0x00]
+    b       svcall_handled
+
+.thumb_func
+svcall_exit:
+    ldr     r0, [r5]
+    pop     {r4-r11, lr}
+    b       exit
+
+.thumb_func
+svcall_fork:
+    bl      fork
+    str     r0, [r5, #+0x00]
+    b       svcall_handled
+
+.thumb_func
+svcall_wait:
+    ldr     r0, [r5, #+0x00]
+    bl      wait
+    str     r0, [r5, #+0x00]
+    b       svcall_handled
+
+.thumb_func
+svcall_handled:
     pop     {r4-r11, lr}
     bx      lr
 

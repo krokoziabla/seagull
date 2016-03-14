@@ -4,6 +4,8 @@
 .global shceduler_schedule
 .global exit
 .global wrapper
+.global fork
+.global wait
 
 .set systick_base_register, 0xe000e010
 .set sysctrl_base_register, 0xe000ed00
@@ -93,6 +95,12 @@ exit:
     orr     r2, #2
     strb    r2, [r1, #+0x07]
     pop     {r4-r11, lr}
+    bx      lr
+
+fork:
+    bx      lr
+
+wait:
     bx      lr
 
 # name:
