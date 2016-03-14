@@ -31,7 +31,7 @@ __svcall_vector:
     ittt    eq
     ldreq   r0, [r5, #+0x00]
     ldreq   r1, [r5, #+0x04]
-    bleq    schedule
+    bleq    shceduler_start
     cmp     r4, #000
     itt     eq
     streq   r0, [r5, #+0x00]
@@ -56,15 +56,19 @@ __svcall_handled:
 .thumb_func
 __systick_vector:
     # save context
+    push    {lr}
+
     mrs     r0, psp
     stmfd   r0!, {r4-r11}
     msr     psp, r0
 
-    bl      schedule
+    bl      shceduler_schedule
 
     # restore context
     mrs     r0, psp
     ldmfd   r0!, {r4-r11}
     msr     psp, r0
+
+    pop     {lr}
     bx      lr
 

@@ -1,8 +1,12 @@
 .syntax unified
 
-.global schedule
+.global shceduler_start
+.global shceduler_schedule
 .global exit
 .global wrapper
+
+.set systick_base_register, 0xe000e010
+.set sysctrl_base_register, 0xe000ed00
 
 # name:
 #   wrapper
@@ -23,7 +27,7 @@ wrapper:
 
 
 # name:
-#   schedule
+#   shceduler_start
 # desc:
 #   launches scheduler
 # in:
@@ -32,7 +36,7 @@ wrapper:
 # out:
 #   r0 - the return code of root thread
 .thumb_func
-schedule:
+shceduler_start:
     push    {r4-r11, lr}
 
     # ASSERT: the schedule is not running
@@ -60,6 +64,14 @@ schedule:
 
     msr     psp, r4
 
+    # configure and enable SysTick timer
+    ldr     r0, =systick_base_register
+    mov     r1, #100
+    str     r1, [r0, #+0x04]
+    str     r1, [r0, #+0x08]
+    mov     r1, #0x07
+    str     r1, [r0, #+0x00]
+
     // set LR to 0xffffffd to switch to Thread Process mode
     bfc     lr, #1, #1
     bx      lr
@@ -71,5 +83,23 @@ schedule:
 # in:
 #   r0 - the return code of the thread
 exit:
+    # disable SysTick timer
+    ldr     r1, =systick_base_register
+    mov     r2, #0
+    str     r2, [r1, #+0x00]
+    # clear pending SysTick interrupt
+    ldr     r1, =sysctrl_base_register
+    ldrb    r2, [r1, #+0x07]
+    orr     r2, #2
+    strb    r2, [r1, #+0x07]
     pop     {r4-r11, lr}
+    bx      lr
+
+# name:
+#   shceduler_schedule
+# desc:
+#   schedules next thread to run
+# in:
+.thumb_func
+shceduler_schedule:
     bx      lr
