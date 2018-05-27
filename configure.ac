@@ -1,5 +1,7 @@
 AC_INIT([seagull], [0.0])
-AM_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE([silent-rules])
+
+AM_SILENT_RULES([yes])
 
 ${CFLAGS=""}
 
