@@ -6,7 +6,6 @@ AM_LDFLAGS = -T $(srcdir)/stm32f4discovery.ld -nostartfiles -nostdlib -nodefault
 
 seagull_SOURCES = 	exceptions.s \
 					startup.s \
-					vectors.s \
 					$(NULL)
 
 seagull_DEPENDENCIES = stm32f4discovery.ld Makefile.am

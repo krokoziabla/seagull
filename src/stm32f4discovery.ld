@@ -9,7 +9,13 @@ MEMORY
 
 SECTIONS
 {
-    vectors : { vectors.o(vectors) } > code AT > sram
+    vectors :
+    {
+        LONG(__system_stack);
+        LONG(__reset_vector + 1);
+        LONG(0);
+        LONG(__hard_fault_vector + 1);
+    } > code AT > sram
 
     .text : { *(.text) } > code AT > sram
 
