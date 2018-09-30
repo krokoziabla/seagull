@@ -1,0 +1,36 @@
+plugins
+{
+    id 'assembler'
+}
+
+model
+{
+    components
+    {
+        core(NativeExecutableSpec)
+        {
+            targetPlatform "arm"
+        }
+    }
+    toolChains
+    {
+        clang(Clang)
+        {
+            target "arm",
+            {
+                assembler.withArguments
+                {
+                    it << "-target" << "armv7m-unknown-eabi"
+                }
+                linker.withArguments
+                {
+                    it << "-target" << "armv7m-unknown-eabi"
+                }
+            }
+        }
+    }
+    platforms
+    {
+        arm
+    }
+}

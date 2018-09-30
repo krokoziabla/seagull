@@ -1,13 +1,8 @@
-/Debug
-/COPYING
-/INSTALL
-/aclocal.m4
-/autom4te.cache/
-/configure
-/depcomp
-/install-sh
-/missing
-/compile
+/.gradle/
+/build/
+/gradle/
+/gradlew
+/gradlew.bat
 
 *.swp
 *.in
