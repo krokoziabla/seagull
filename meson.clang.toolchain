@@ -1,0 +1,13 @@
+[binaries]
+c = 'clang'
+strip = 'llvm-strip'
+
+[properties]
+c_args = ['--target=armv7m-eabi']
+c_link_args = ['--target=armv7m-eabi']
+
+[host_machine]
+system = 'bare metal'
+cpu_family = 'arm'
+cpu = 'armv7m'
+endian = 'little'
