@@ -12,9 +12,9 @@ SECTIONS
     vectors :
     {
         LONG(__system_stack);
-        LONG(__reset_vector + 1);
+        LONG(__reset_vector);
         LONG(0);
-        LONG(__hard_fault_vector + 1);
+        LONG(__hard_fault_vector);
     } > code AT > sram
 
     .text : { *(.text) } > code AT > sram
